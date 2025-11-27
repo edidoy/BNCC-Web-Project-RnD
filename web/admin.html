@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - BNCC Feedback</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .container { max-width: 1200px; margin: 0 auto; }
+        .table-container { overflow-x: auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; font-size: 14px; }
+        th { background-color: #f8f9fa; color: #333; font-weight: 600; }
+        
+        .badge { padding: 5px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; text-transform: capitalize; }
+        .badge-open { background: #e3f2fd; color: #0d47a1; }
+        .badge-in-review { background: #fff3e0; color: #e65100; }
+        .badge-resolved { background: #e8f5e9; color: #1b5e20; }
+
+        .btn-action { padding: 5px 10px; border: none; border-radius: 4px; cursor: pointer; font-size: 12px; margin-right: 5px; color: white; }
+        .btn-edit { background-color: #ffc107; color: black; }
+        .btn-delete { background-color: #dc3545; }
+
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); justify-content: center; align-items: center; }
+        .modal-content { background: white; padding: 30px; border-radius: 12px; width: 400px; max-width: 90%; }
+        .modal-header { display: flex; justify-content: space-between; margin-bottom: 20px; font-weight: bold; font-size: 18px; }
+        .close { cursor: pointer; font-size: 24px; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2 style="margin: 30px 0; text-align: center; color: #333;">Admin Dashboard</h2>
+
+        <div class="table-container">
+            <button onclick="fetchData()" style="width: auto; margin-bottom: 15px; background: #28a745;">Refresh Data</button>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nama</th>
+                        <th>Acara</th>
+                        <th>Divisi</th>
+                        <th>Rating</th>
+                        <th>Status</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody id="feedbackTableBody">
+                    <tr><td colspan="6" style="text-align:center;">Memuat data...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span>Edit Feedback</span>
+                <span class="close" onclick="closeModal()">&times;</span>
+            </div>
+            <form id="editForm">
+                <input type="hidden" id="editId">
+                
+                <div class="form-group">
+                    <label>Status</label>
+                    <select id="editStatus" required>
+                        <option value="open">Open</option>
+                        <option value="in-review">In Review</option>
+                        <option value="resolved">Resolved</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Nama Acara</label>
+                    <input type="text" id="editEventName" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Divisi</label>
+                    <select id="editDivision" required>
+                        <option value="LnT">LnT</option>
+                        <option value="EEO">EEO</option>
+                        <option value="PR">PR</option>
+                        <option value="HRD">HRD</option>
+                        <option value="RnD">RnD</option>
+                    </select>
+                </div>
+
+                <button type="submit">Simpan Perubahan</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/admin.js"></script>
+</body>
+</html>
