@@ -1,4 +1,3 @@
-import mysql from 'mysql2/promise'; 
 import 'dotenv/config'; 
 import { open } from 'sqlite';
 import fs from 'fs';
@@ -24,7 +23,7 @@ const CREATE_FEEDBACK_TABLE = `
 
 async function initDatabase() {
     const dbPath = path.join(process.cwd(), 'backend-rnd', 'feedback.sqlite');
-
+    
     const dir = path.dirname(dbPath);
     if (!fs.existsSync(dir)) {
         fs.mkdirSync(dir, { recursive: true });
@@ -41,7 +40,7 @@ async function initDatabase() {
         
     } catch (error) {
         console.error("Gagal menginisialisasi database SQLite:", error.message);
-        process.exit(1); 
+        process.exit(1);
     }
 }
 
