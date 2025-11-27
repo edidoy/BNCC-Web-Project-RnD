@@ -9,17 +9,16 @@
   "scripts": {
     "start": "node src/index.js"
   },
-
   "keywords": [
     "express",
-    "mysql",
+    "sqlite",
     "crud"
   ],
-
   "dependencies": {
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
-    "mysql2": "^3.15.3"
+    "sqlite": "^5.1.1",
+    "sqlite3": "^5.1.7"
   },
   "devDependencies": {
     "nodemon": "^3.1.11"
