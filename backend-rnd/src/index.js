@@ -26,5 +26,4 @@ app.get('/', (req, res) => {
 
 app.listen(PORT, () => {
     console.log(`Server nyala di http://localhost:${PORT}`);
-    console.log('Pastikan XAMPP dan database sudah siap!');
 });
