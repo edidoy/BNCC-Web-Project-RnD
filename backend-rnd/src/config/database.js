@@ -25,13 +25,20 @@ const CREATE_FEEDBACK_TABLE = `
 async function initDatabase() {
     const dbPath = path.join(process.cwd(), 'backend-rnd', 'feedback.sqlite');
 
-const pool = mysql.createPool(dbConfig);
+    const dir = path.dirname(dbPath);
+    if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir, { recursive: true });
+    }
 
-async function testConnection() {
     try {
-        const connection = await pool.getConnection();
-        console.log("Koneksi ke MySQL sukses.");
-        connection.release(); 
+        db = await open({
+            filename: dbPath,
+            driver: sqlite3.Database
+        });
+
+        await db.exec(CREATE_FEEDBACK_TABLE);
+        console.log(`Koneksi ke database SQLite berhasil.`);
+        
     } catch (error) {
         console.error("Koneksi ke database GAGAL:", error.message);
         process.exit(1); 
