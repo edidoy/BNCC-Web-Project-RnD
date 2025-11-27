@@ -23,9 +23,9 @@ async function fetchData() {
                 <td>${item.eventName}</td>
                 <td>${item.division}</td>
                 <td>⭐ ${item.rating}</td>
-                <td><span class="badge badge-${item.status}">${item.status}</span></td>
+                <td><span class="badge badge-${item.status || 'open'}">${item.status || 'open'}</span></td>
                 <td>
-                    <button class="btn-action btn-edit" onclick="openEditModal('${item.id}', '${item.eventName}', '${item.division}', '${item.status}')">Edit</button>
+                    <button class="btn-action btn-edit" onclick="openEditModal('${item.id}', '${item.rating}', '${item.status || 'open'}')">Edit</button>
                     <button class="btn-action btn-delete" onclick="deleteFeedback('${item.id}')">Hapus</button>
                 </td>
             `;
@@ -34,7 +34,7 @@ async function fetchData() {
 
     } catch (error) {
         console.error('Error:', error);
-        tableBody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:red;">Gagal mengambil data dari server. Pastikan backend nyala!</td></tr>';
+        tableBody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:red;">Gagal koneksi. Pastikan Backend nyala & CORS aktif!</td></tr>';
     }
 }
 
@@ -45,15 +45,15 @@ async function deleteFeedback(id) {
             alert('Data berhasil dihapus');
             fetchData(); 
         } catch (error) {
-            alert('Gagal menghapus data');
+            alert('Gagal menghapus data. Cek koneksi.');
         }
     }
 }
 
-function openEditModal(id, eventName, division, status) {
+function openEditModal(id, rating, status) {
+  
     document.getElementById('editId').value = id;
-    document.getElementById('editEventName').value = eventName;
-    document.getElementById('editDivision').value = division;
+    document.getElementById('editRating').value = rating; 
     document.getElementById('editStatus').value = status;
     
     document.getElementById('editModal').style.display = 'flex';
@@ -67,10 +67,11 @@ document.getElementById('editForm').addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const id = document.getElementById('editId').value;
+    
+
     const updatedData = {
-        eventName: document.getElementById('editEventName').value,
-        division: document.getElementById('editDivision').value,
-        status: document.getElementById('editStatus').value
+        status: document.getElementById('editStatus').value,
+        rating: parseInt(document.getElementById('editRating').value)
     };
 
     try {
