@@ -40,11 +40,23 @@ async function initDatabase() {
         console.log(`Koneksi ke database SQLite berhasil.`);
         
     } catch (error) {
-        console.error("Koneksi ke database GAGAL:", error.message);
+        console.error("Gagal menginisialisasi database SQLite:", error.message);
         process.exit(1); 
     }
 }
 
-testConnection();
+initDatabase();
 
-export default pool; 
+export default {
+    async execute(sql, params) {
+
+        if (sql.trim().toUpperCase().startsWith('SELECT')) {
+            const rows = await db.all(sql, params);
+            return [rows]; 
+
+        } else {
+            const result = await db.run(sql, params);
+            return [result]; 
+        }
+    }
+};
