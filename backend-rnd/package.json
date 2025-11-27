@@ -1,7 +1,7 @@
 {
   "name": "express-rnd",
   "version": "1.0.0",
-  "description": "express for backend rnd project",
+  "description": "express for backend rnd project with sqlite",
   "license": "ISC",
   "author": "",
   "type": "module",
